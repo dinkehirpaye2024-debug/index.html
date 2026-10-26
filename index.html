@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hydraulic Engineering Marketplace</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #172554;
+    }
+    header {
+      background: #075985;
+      color: white;
+      padding: 24px 16px;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      background: #0c4a6e;
+      padding: 12px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 8px;
+    }
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 3px 12px #0000000d;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .product {
+      border: 1px solid #dbeafe;
+      padding: 16px;
+      border-radius: 10px;
+    }
+    button {
+      background: #0284c7;
+      color: white;
+      border: none;
+      border-radius: 7px;
+      padding: 11px 14px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    button:hover { background: #0369a1; }
+    input, select {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+    }
+    .price { color: #047857; font-weight: bold; }
+    .notice { color: #92400e; font-size: 14px; }
+    footer {
+      background: #0c4a6e;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Hydraulic Engineering Marketplace</h1>
+  <p>Engineering Products • Books • Design Services</p>
+  <p>Ethiopia | Prices in ETB</p>
+</header>
+
+<nav>
+  <a href="#products">Products</a>
+  <a href="#design">Design Services</a>
+  <a href="#wallet">Wallet</a>
+  <a href="#referral">Referral</a>
+</nav>
+
+<main>
+  <section class="card">
+    <h2>Welcome!</h2>
+    <p>Find hydraulic engineering materials, books, equipment,
+       and professional design services in one place.</p>
+  </section>
+
+  <section class="card" id="products">
+    <h2>Engineering Products & Books</h2>
+    <div class="products">
+      <div class="product">
+        <h3>Hydraulic Engineering Book</h3>
+        <p>Digital learning material.</p>
+        <p class="price">350 ETB</p>
+        <button onclick="order('Hydraulic Engineering Book',350)">
+          Order Book
+        </button>
+      </div>
+
+      <div class="product">
+        <h3>Hydraulic Design Template</h3>
+        <p>Template for engineering calculations.</p>
+        <p class="price">250 ETB</p>
+        <button onclick="order('Hydraulic Design Template',250)">
+          Order Template
+        </button>
+      </div>
+
+      <div class="product">
+        <h3>Water Pump</h3>
+        <p>Equipment enquiries and quotations.</p>
+        <p>Price on request</p>
+        <button onclick="order('Water Pump',0)">
+          Request Quote
+        </button>
+      </div>
+
+      <div class="product">
+        <h3>Pipes and Valves</h3>
+        <p>Hydraulic system materials.</p>
+        <p>Price on request</p>
+        <button onclick="order('Pipes and Valves',0)">
+          Request Quote
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="design">
+    <h2>Engineering Design Services</h2>
+    <ul>
+      <li>Water supply system design</li>
+      <li>Irrigation system design</li>
+      <li>Drainage system design</li>
+      <li>Pipeline hydraulic calculations</li>
+      <li>Pump selection and head calculations</li>
+    </ul>
+    <button onclick="order('Engineering Design Consultation',0)">
+      Request Design Service
+    </button>
+  </section>
+
+  <section class="card" id="wallet">
+    <h2>Deposit & Withdrawal</h2>
+    <p><strong>Demo wallet balance:</strong>
+      <span id="balance">0.00</span> ETB
+    </p>
+
+    <label for="amount">Amount (ETB)</label>
+    <input id="amount" type="number" min="1"
+           placeholder="Enter amount">
+
+    <label for="provider">Payment provider</label>
+    <select id="provider">
+      <option>Telebirr</option>
+      <option>Siinqee Bank</option>
+      <option>Cooperative Bank of Oromia</option>
+    </select>
+
+    <button onclick="paymentRequest('deposit')">
+      Request Deposit
+    </button>
+    <button onclick="paymentRequest('withdraw')">
+      Request Withdrawal
+    </button>
+
+    <p class="notice">
+      Demo only: requests are displayed in this browser.
+      No real money is deposited, withdrawn, or transferred.
+    </p>
+    <div id="paymentResult"></div>
+  </section>
+
+  <section class="card" id="referral">
+    <h2>Invite Friends</h2>
+    <p>Share your referral link with friends.</p>
+
+    <input id="refLink" readonly
+           placeholder="Your referral link will appear here">
+
+    <button onclick="createReferral()">Create Referral Link</button>
+    <button onclick="shareReferral()">Share with Friends</button>
+    <p id="refResult"></p>
+  </section>
+
+  <section class="card">
+    <h2>My Orders</h2>
+    <ul id="orders">
+      <li>No orders yet.</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p>Hydraulic Engineering Marketplace</p>
+  <p>Engineering knowledge for better infrastructure.</p>
+</footer>
+
+<script>
+  // Front-end demonstration only.
+  // Do not use browser storage as a real financial ledger.
+
+  let balance = 0;
+  let orderCount = 0;
+
+  function order(name, price) {
+    orderCount++;
+    const list = document.getElementById("orders");
+
+    if (orderCount === 1) {
+      list.innerHTML = "";
+    }
+
+    const item = document.createElement("li");
+    item.textContent = name + " — " +
+      (price > 0 ? price + " ETB" : "Quote requested") +
+      " — Pending";
+    list.appendChild(item);
+
+    alert("Order request created. Connect a backend to process it.");
+  }
+
+  function paymentRequest(type) {
+    const amount = Number(document.getElementById("amount").value);
+    const provider = document.getElementById("provider").value;
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+      alert("Please enter a valid amount.");
+      return;
+    }
+
+    document.getElementById("paymentResult").textContent =
+      type.toUpperCase() + " REQUEST: " + amount.toFixed(2) +
+      " ETB via " + provider +
+      ". Pending backend verification.";
+
+    // Intentionally does not change the wallet balance.
+    // A verified server-side payment is required.
+  }
+
+  function createReferral() {
+    const referralCode = "HE" +
+      Math.random().toString(36).substring(2, 9).toUpperCase();
+
+    const link = new URL(window.location.href);
+    link.searchParams.set("ref", referralCode);
+
+    document.getElementById("refLink").value = link.href;
+    document.getElementById("refResult").textContent =
+      "Demo referral link created. A backend is needed to track signups.";
+  }
+
+  async function shareReferral() {
+    const link = document.getElementById("refLink").value;
+
+    if (!link) {
+      createReferral();
+    }
+
+    const referralLink = document.getElementById("refLink").value;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Hydraulic Engineering Marketplace",
+          text: "Explore engineering products, books, and design services.",
+          url: referralLink
+        });
+      } catch (error) {
+        // Sharing cancelled or unavailable.
+      }
+    } else if (navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(referralLink);
+        alert("Referral link copied!");
+      } catch (error) {
+        alert("Copy the link from the referral field.");
+      }
+    } else {
+      alert("Copy the link from the referral field.");
+    }
+  }
+</script>
+
+</body>
+  </html>
